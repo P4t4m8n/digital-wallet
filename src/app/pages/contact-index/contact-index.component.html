@@ -1,0 +1,4 @@
+<section *ngIf="contacts$ |async as contacts" class="contact-index">
+  <contact-filter />
+  <contact-list [contacts]="contacts" />
+</section>

@@ -1,0 +1,15 @@
+<header>
+  <div>
+    <img src="/src/assets/icons/bitcoin-logo.png" />
+    <nav>
+      <a routerLink="">Home</a>
+      <a routerLink="/statistics">Statistics</a>
+    </nav>
+  </div>
+  <section *ngIf="user$|async as user" class="user">
+    <a routerLink="/contacts">Contacts</a>
+    <h3>
+      {{ user.name }}
+    </h3>
+  </section>
+</header>
