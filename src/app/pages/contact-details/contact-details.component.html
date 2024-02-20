@@ -1,1 +1,12 @@
-<p>contact-details works!</p>
+<section *ngIf="contact">
+  <img src="https://robohash.org/{{contact.name}}.png">
+  <h3>
+    {{ contact.name }}
+  </h3>
+  <h4>
+    {{ contact.phone }}
+  </h4>
+  <h4>
+    {{ contact.email }}
+  </h4>
+</section>

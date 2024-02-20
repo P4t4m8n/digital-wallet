@@ -1,4 +1,4 @@
 <section *ngIf="contacts$ |async as contacts" class="contact-index">
   <contact-filter />
-  <contact-list [contacts]="contacts" />
+  <contact-list [contacts]="contacts" (remove)="onRemoveContact($event)" />
 </section>

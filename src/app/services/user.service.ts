@@ -14,7 +14,8 @@ export class userService {
     private _user$ = new BehaviorSubject<User>({
         name: "Puki Ben David",
         coins: 100,
-        moves: []
+        moves: [],
+        imgUrl:''
     })
     public user$ = this._user$.asObservable()
 

@@ -1,0 +1,64 @@
+header {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-inline: 1rem;
+    background-color: rgb(235, 244, 251);
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgb(29, 70, 131)0px 1px 2px 0px;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+
+        img {
+            width: 100%;
+            object-fit: scale-down;
+            height: 3rem;
+        }
+
+        nav {
+            display: flex;
+            gap: .5rem;
+        }
+
+
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+        font-size: 1rem;
+        line-height: 1;
+        text-decoration: none;
+        font-weight: 100;
+        padding: 8px;
+        border-radius: 30px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(29, 70, 131) 0px 0px 0px 1px inset;
+
+        &:hover {
+            background-color: rgb(29, 70, 131);
+            color: white;
+        }
+
+    }
+
+
+
+
+    section {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        h3 {
+            line-height: 0;
+            font-weight: 400;
+            font-style: oblique;
+        }
+
+    }
+
+}

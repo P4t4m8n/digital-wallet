@@ -39,12 +39,12 @@ export class ContactService {
             )
     }
 
-    // public getContactById(_id: string): Observable<Contact> {
-    //     return from(storageService.get(ENTITY, _id))
-    //         .pipe(catchError(err => throwError(() => `Contact id ${_id} not found!`)))
-    // }
+    public getContactById(contactId: string): Observable<Contact> {
+        return from(storageService.get<Contact>(ENTITY, contactId))
+            .pipe(catchError(err => throwError(() => `Contact id ${contactId} not found!`)))
+    }
 
-    public deleteContact(id: string) {
+    public remove(id: string) {
         return from(storageService.remove(ENTITY, id))
             .pipe(
                 tap(() => {

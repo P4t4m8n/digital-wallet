@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 
 @Component({
@@ -8,4 +8,6 @@ import { Contact } from '../../models/contact.model';
 })
 export class ContactListComponent {
   @Input() contacts: Contact[] | null = null
+  @Output() remove = new EventEmitter()
+
 }

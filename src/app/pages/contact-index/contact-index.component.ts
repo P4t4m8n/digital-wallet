@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ContactService } from '../../services/contact.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { Contact } from '../../models/contact.model';
 
 @Component({
@@ -17,5 +17,14 @@ export class ContactIndexComponent implements OnInit {
   ngOnInit(): void {
       console.log(this.contacts$)
   }
+
+  onRemoveContact(petId: string) {
+    this.contactService.remove(petId)
+        .pipe(take(1))
+        .subscribe({
+            error: err => console.log('err:', err),
+        })
+
+}
 
 }

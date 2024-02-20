@@ -7,5 +7,6 @@ export interface User {
     // phone: string
     // password: string
     moves: Array<object>
+    imgUrl: string
 }
 
