@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
-import { Rate } from '../models/rate.model'
+import { Rate } from '../models/bitcoin.model'
+import { ChartResponse } from '../models/chartResponse.model'
 @Injectable({
   providedIn: 'root',
 })
@@ -16,13 +17,13 @@ export class BitcoinService {
   getRate(): Observable<number> {
     const rate = loadFromStorage('rate_db')
     if (rate !== undefined) {
-      this._rate$.next(rate) // Update BehaviorSubject with the cached rate
+      this._rate$.next(rate)
       return of(rate)
     }
     const URL = 'https://blockchain.info/tobtc?currency=USD&value=1'
     return this.http.get<any>(URL, { responseType: 'text' as 'json' }).pipe(
       tap((fetchedRate: any) => {
-        const rateValue = {rate:fetchedRate}
+        const rateValue = { rate: fetchedRate }
         this._rate$.next(rateValue)
         saveToStorage('rate_db', rateValue)
       }),
@@ -33,24 +34,25 @@ export class BitcoinService {
   }
 
   getData(type: string): Observable<any> {
-    // const data = loadFromStorage('data')
-    // if (data) return of(data)
+    let chartData = loadFromStorage(type)
+    if (chartData) return of(chartData)
 
     const URL = `https://api.blockchain.info/charts/${type}?timespan=5months&format=json&cors=true`
-    return this.http.get(URL).pipe(
+    return this.http.get<ChartResponse>(URL).pipe(
       map(response => {
-        console.log("response:", response)
-        // const labels = response['values'].map(dataPoint => this.convertTime(dataPoint.x))
+        const labels = response.values.map(dataPoint => this.convertTime(dataPoint.x))
         const dataset = {
           label: 'Market Price',
-          // data: response['values'].map(dataPoint => dataPoint.y),
+          data: response.values.map(dataPoint => dataPoint.y),
           backgroundColor: '#f87979',
           fill: false,
         }
-        return {
-          // labels,
+        chartData = {
+          labels,
           datasets: [dataset]
         }
+        saveToStorage(type, chartData)
+        return chartData
       }),
       catchError(error => {
         throw 'Error in getData: ' + error

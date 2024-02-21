@@ -12,7 +12,12 @@ import { ContactEditComponent } from './pages/contact-edit/contact-edit.componen
 import { ContactIndexComponent } from './pages/contact-index/contact-index.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
-import {  HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
+import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
+import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,13 +31,18 @@ import {  HttpClientModule } from '@angular/common/http';
     ContactIndexComponent,
     HomeComponent,
     AppHeaderComponent,
+    StatisticsComponent,
+    LineChartComponent,
+    BarChartComponent,
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgChartsModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false } }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

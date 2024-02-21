@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { userService } from '../../services/user.service';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../../models/user.model';
-import { Rate } from '../../models/rate.model';
+import { Rate } from '../../models/bitcoin.model';
 import { BitcoinService } from '../../services/bitcoinService';
 
 @Component({

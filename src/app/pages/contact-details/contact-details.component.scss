@@ -1,0 +1,30 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+    height: fit-content;
+    width: fit-content;
+    padding: 18px;
+    border-radius: 12px;
+    background-color: rgb(246, 251, 255);
+
+    a {
+        text-decoration: none;
+        color: black;
+        font-size: 1rem;
+        line-height: 1;
+        text-decoration: none;
+        font-weight: 100;
+        padding: 8px;
+        border-radius: 30px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(29, 70, 131) 0px 0px 0px 1px inset;
+
+        &:hover {
+            background-color: rgb(29, 70, 131);
+            color: white;
+        }
+
+    }
+
+}

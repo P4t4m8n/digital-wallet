@@ -1,0 +1,5 @@
+
+<input type="color" *ngIf="chartData" [value]="chartData.datasets[0].borderColor" (change)="changeBorderColor($event.target)" title="Change Border Color">
+<input type="color" *ngIf="chartData" [value]="chartData.datasets[0].backgroundColor" (change)="changeBackgroundColor($event.target)" title="Change Background Color">
+
+<canvas baseChart class="chart" [data]="chartData" [options]="lineChartOptions" [type]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
