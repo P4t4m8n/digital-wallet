@@ -2,35 +2,39 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError, from, tap, retry, catchError } from 'rxjs';
 import { storageService } from './async-storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Contact } from '../models/contact.model';
+import { Contact, ContactFilter } from '../models/contact.model';
+
 const ENTITY = 'contacts'
-
-
-
 @Injectable({
     providedIn: 'root'
 })
 export class ContactService {
 
+    //Variables
+
     private _contacts$ = new BehaviorSubject<Contact[]>([])
     public contacts$ = this._contacts$.asObservable()
 
+    private _contactFilter$ = new BehaviorSubject<ContactFilter>({ term: "" })
+    public contactFilter$ = this._contactFilter$.asObservable()
+
+    //Constructor
+
     constructor() {
-        // Handling Demo Data, fetching from storage || saving to storage 
         const contacts = JSON.parse(localStorage.getItem(ENTITY) || 'null')
         if (!contacts || contacts.length === 0) {
             localStorage.setItem(ENTITY, JSON.stringify(this._createContacts()))
         }
     }
 
+    //Public Methods
+
     public query() {
         return from(storageService.query<Contact>(ENTITY))
             .pipe(
                 tap(contacts => {
-                    const filterBy = { term: '' }
-                    if (filterBy && filterBy.term) {
-                        contacts = this._filter(contacts, filterBy.term)
-                    }
+                    const filterBy = this._contactFilter$.value
+                    console.log("filterBy:", filterBy)
                     contacts = contacts.filter(contact => contact.name.toLowerCase().includes(filterBy.term.toLowerCase()))
                     this._contacts$.next(this._sort(contacts))
                 }),
@@ -39,7 +43,7 @@ export class ContactService {
             )
     }
 
-    public getContactById(contactId: string): Observable<Contact> {
+    public get(contactId: string): Observable<Contact> {
         return from(storageService.get<Contact>(ENTITY, contactId))
             .pipe(catchError(err => throwError(() => `Contact id ${contactId} not found!`)))
     }
@@ -57,11 +61,11 @@ export class ContactService {
             )
     }
 
-    public saveContact(contact: Contact) {
+    public save(contact: Contact) {
         return contact._id ? this._updateContact(contact) : this._addContact(contact)
     }
 
-    public getEmptyContact() {
+    public getEmptyContact(): Partial<Contact> {
         return {
             name: '',
             email: '',
@@ -69,6 +73,12 @@ export class ContactService {
         }
     }
 
+    public setFilter(filterBy: ContactFilter) {
+        this._contactFilter$.next(filterBy)
+        this.query().subscribe()
+    }
+
+    //Private Methods
 
     private _updateContact(contact: Contact) {
         return from(storageService.put<Contact>(ENTITY, contact))
@@ -242,12 +252,4 @@ export class ContactService {
     }
 }
 
-function _getRandomId(length = 8): string {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() *
-            characters.length));
-    }
-    return result;
-}
+

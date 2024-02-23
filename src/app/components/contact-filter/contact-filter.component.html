@@ -1,1 +1,4 @@
-<p>contact-filter works!</p>
+<input
+      [(ngModel)]="filterBy.term" (ngModelChange)="onSetFilter($event)" 
+      type="search" placeholder="Filter Contacts"
+       />
