@@ -1,14 +1,17 @@
-  <img src="https://robohash.org/{{contact.name}}.png">
-  
-  <h3>
-    {{ contact.name }}
-  </h3>
-  <h4>
-    {{ contact.phone }}
-  </h4>
-  <div>
-    <button (click)="onRemoveContact()">Remove</button>
-    <a [routerLink]="['edit', contact._id]">Edit</a>
+  <li>
 
-    <a routerLink="{{contact._id}}">Details</a>
-  </div>
+    <img src="https://robohash.org/{{contact.name}}.png">
+
+    <h3>
+      {{ contact.name }}
+    </h3>
+    <h4>
+      {{ contact.phone }}
+    </h4>
+    <div>
+      <button (click)="onRemoveContact()">Remove</button>
+      <a [routerLink]="['edit', contact._id]">Edit</a>
+
+      <a routerLink="{{contact._id}}">Details</a>
+    </div>
+  </li>
