@@ -1,8 +1,9 @@
-<pre>{{form.value|json}}</pre>
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSaveContact()">
   <input formControlName="name" placeholder="Contact Name" />
   <input formControlName="email" placeholder="Contact Email" />
   <input formControlName="phone" placeholder="Contact Phone" />
-  <button>Save</button>
-  <button (click)="onBack()">Cancel</button>
+  <div class="actions">
+    <button (click)="onBack()">Cancel</button>
+    <button>Save</button>
+  </div>
 </form>

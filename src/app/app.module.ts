@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app-root/app.component';
@@ -47,7 +48,8 @@ import { BarChartComponent } from './components/charts/bar-chart/bar-chart.compo
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false } }, provideAnimationsAsync()],
   bootstrap: [AppComponent]

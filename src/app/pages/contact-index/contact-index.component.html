@@ -1,4 +1,4 @@
-<section *ngIf="contacts$ |async as contacts" class="contact-index">
+<section *ngIf="contacts$ |async as contacts" [ngClass]="{overlay:overlayVisible}" class="contact-index">
   <contact-filter />
   <contact-list [contacts]="contacts" (remove)="onRemoveContact($event)" />
 </section>

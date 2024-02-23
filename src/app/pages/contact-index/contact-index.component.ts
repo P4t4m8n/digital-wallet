@@ -11,8 +11,10 @@ import { Contact } from '../../models/contact.model';
 export class ContactIndexComponent implements OnInit {
 
   contactService = inject(ContactService)
+
   subscription!: Subscription
   contacts$: Observable<Contact[]> = this.contactService.contacts$
+  overlayVisible!: boolean
 
   ngOnInit(): void {
   }
@@ -23,6 +25,7 @@ export class ContactIndexComponent implements OnInit {
       .subscribe({
         error: err => console.log('err:', err),
       })
+
 
   }
 

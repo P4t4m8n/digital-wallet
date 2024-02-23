@@ -34,7 +34,6 @@ export class ContactService {
             .pipe(
                 tap(contacts => {
                     const filterBy = this._contactFilter$.value
-                    console.log("filterBy:", this._contactFilter$)
                     if (filterBy.name)
                         contacts = contacts.filter(contact => contact.name.toLowerCase().includes(filterBy.name.toLowerCase()))
                     if (filterBy.phone)
@@ -68,6 +67,7 @@ export class ContactService {
     }
 
     public save(contact: Contact) {
+        console.log("contact:", contact)
         return contact._id ? this._updateContact(contact) : this._addContact(contact)
     }
 
