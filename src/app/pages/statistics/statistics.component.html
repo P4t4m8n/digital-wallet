@@ -1,17 +1,21 @@
 <section class="statistics">
-    <div class="selectors">
-      <select [(ngModel)]="type" (change)="onTypeChange(type)">
-        <option value="market-price">Market Price</option>
-        <option value="avg-block-size">Average Block Size</option>
-      </select>
-      <select [(ngModel)]="currChart">
-        <option value="line-chart">Line Chart</option>
-        <option value="bar-chart">Bar Chart</option>
-      </select>
-    </div>
-    <div class="chart-con">
-      <line-chart *ngIf="currChart === 'line-chart'" [chartData]="chartData"></line-chart>
-      <bar-chart *ngIf="currChart === 'bar-chart'" [chartData]="chartData"></bar-chart>
-    </div>
-  </section>
-  
+  <div class="selectors">
+    <select [(ngModel)]="type" (change)="onTypeChange(type)">
+      <option value="market-price">Market Price</option>
+      <option value="avg-block-size">Average Block Size</option>
+    </select>
+
+    <mat-form-field>
+      <mat-label>Select an option</mat-label>
+      <mat-select [(value)]="currChart">
+        <mat-option>None</mat-option>
+        <mat-option value="line-chart">Line Chart</mat-option>
+        <mat-option value="bar-chart">Bar Chart</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="chart-con">
+    <line-chart *ngIf="currChart === 'line-chart'" [chartData]="chartData"></line-chart>
+    <bar-chart *ngIf="currChart === 'bar-chart'" [chartData]="chartData"></bar-chart>
+  </div>
+</section>

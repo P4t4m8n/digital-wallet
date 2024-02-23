@@ -15,16 +15,15 @@ export class ContactIndexComponent implements OnInit {
   contacts$: Observable<Contact[]> = this.contactService.contacts$
 
   ngOnInit(): void {
-      console.log(this.contacts$)
   }
 
   onRemoveContact(petId: string) {
     this.contactService.remove(petId)
-        .pipe(take(1))
-        .subscribe({
-            error: err => console.log('err:', err),
-        })
+      .pipe(take(1))
+      .subscribe({
+        error: err => console.log('err:', err),
+      })
 
-}
+  }
 
 }
