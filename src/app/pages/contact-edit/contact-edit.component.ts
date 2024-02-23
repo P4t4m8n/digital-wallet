@@ -35,6 +35,7 @@ export class ContactEditComponent implements OnInit, OnDestroy {
   }
 
   onSaveContact() {
+    console.log("bye")
     this.contactService.save(this.contact as Contact)
       .pipe(takeUntil(this.destroySubject$))
       .subscribe({
@@ -43,6 +44,7 @@ export class ContactEditComponent implements OnInit, OnDestroy {
   }
 
   onBack = () => {
+    console.log("hi")
     this.router.navigateByUrl('/contacts')
   }
 

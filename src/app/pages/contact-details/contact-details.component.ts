@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { Component, OnInit, inject } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Contact } from '../../models/contact.model'
 import { ContactService } from '../../services/contact.service'
 import { Observable, switchMap } from 'rxjs'
@@ -11,8 +11,10 @@ import { Observable, switchMap } from 'rxjs'
 })
 export class ContactDetailsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-    private contactService: ContactService) { }
+
+  route = inject(ActivatedRoute)
+  router = inject(Router)
+  contactService = inject(ContactService)
 
   contact$: Observable<Contact> | null = null
 
@@ -23,6 +25,9 @@ export class ContactDetailsComponent implements OnInit {
         this.contactService.get(params['contactId'])
       )
     )
-   
+  }
+
+  onBack = () => {
+    this.router.navigateByUrl('/contacts')
   }
 }
