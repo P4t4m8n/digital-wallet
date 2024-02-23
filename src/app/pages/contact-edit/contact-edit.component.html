@@ -1,1 +1,8 @@
-<p>contact-edit works!</p>
+<pre>{{form.value|json}}</pre>
+<form [formGroup]="form">
+  <input formControlName="name" placeholder="Contact Name" />
+  <input formControlName="email" placeholder="Contact Email" />
+  <input formControlName="phone" placeholder="Contact Phone" />
+  <button>Save</button>
+  <button (click)="onBack">Cancel</button>
+</form>

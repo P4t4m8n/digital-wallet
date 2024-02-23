@@ -1,4 +1,4 @@
-<section *ngIf="contact">
+<section *ngIf="contact$|async as contact">
   <img src="https://robohash.org/{{contact.name}}.png">
   <h3>
     {{ contact.name }}

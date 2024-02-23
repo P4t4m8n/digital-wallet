@@ -44,7 +44,6 @@ export class BarChartComponent implements OnInit {
     this.chart?.update()
   }
 
-  // Pagination control
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       console.log("this.totalPages:", this.totalPages)
