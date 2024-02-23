@@ -1,33 +1,40 @@
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Contact } from '../../models/contact.model'
 import { ContactService } from '../../services/contact.service'
-import { Observable, switchMap } from 'rxjs'
+import { Subject, Subscription, filter, fromEvent, map, takeUntil } from 'rxjs'
 
 @Component({
   selector: 'contact-details',
   templateUrl: './contact-details.component.html',
   styleUrl: './contact-details.component.scss'
 })
-export class ContactDetailsComponent implements OnInit {
+export class ContactDetailsComponent implements OnInit, OnDestroy {
 
 
   route = inject(ActivatedRoute)
   router = inject(Router)
   contactService = inject(ContactService)
+  elRef = inject(ElementRef)
 
-  contact$: Observable<Contact> | null = null
+  destroySubject$ = new Subject<void>()
+  subscription!: Subscription
+
+
+  contact$ = this.route.data.pipe(map(data => data['contact']))
 
   ngOnInit(): void {
 
-    this.contact$ = this.route.params.pipe(
-      switchMap(params =>
-        this.contactService.get(params['contactId'])
-      )
-    )
+    fromEvent(document, 'click')
+      .pipe(filter(event => !this.elRef.nativeElement.contains(event.target)), takeUntil(this.destroySubject$))
+      .subscribe(() => this.onBack())
   }
 
   onBack = () => {
     this.router.navigateByUrl('/contacts')
+  }
+
+  ngOnDestroy(): void {
+    this.destroySubject$.next()
+    this.destroySubject$.complete()
   }
 }

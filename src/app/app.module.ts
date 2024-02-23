@@ -23,6 +23,7 @@ import { AppHeaderComponent } from './components/app-header/app-header.component
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
+import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { BarChartComponent } from './components/charts/bar-chart/bar-chart.compo
     StatisticsComponent,
     LineChartComponent,
     BarChartComponent,
+    AddIconComponent,
   ],
   imports: [
     HttpClientModule,

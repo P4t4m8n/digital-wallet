@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, filter, fromEvent, map, takeUntil } from 'rxjs';
-import { ContactService } from '../../services/contact.service';
-import { Contact } from '../../models/contact.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, inject } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { Subject, filter, map, takeUntil } from 'rxjs'
+import { ContactService } from '../../services/contact.service'
+import { Contact } from '../../models/contact.model'
+import { FormBuilder, FormGroup } from '@angular/forms'
 
 
 
@@ -26,12 +26,15 @@ export class ContactEditComponent implements OnInit, OnDestroy {
 
   contact = this.contactService.getEmptyContact()
   form!: FormGroup
+  isInitialized = false
 
   ngOnInit(): void {
-
+    console.log()
     this.route.data
       .pipe(map(data => data['contact']), filter(contact => contact))
-      .subscribe(contact => this.contact = contact)
+      .subscribe(contact => {
+        this.contact = contact
+      })
 
     this.form = this.fb.group({
       name: [this.contact.name],
@@ -39,9 +42,10 @@ export class ContactEditComponent implements OnInit, OnDestroy {
       phone: [this.contact.phone]
     })
 
-    fromEvent(document, 'click')
-      .pipe(filter(event => !this.elRef.nativeElement.contains(event.target)), takeUntil(this.destroySubject$))
-      .subscribe(() => this.onBack())
+    setTimeout(() => {
+      this.isInitialized = true;
+    }, 0)
+
   }
 
   onSaveContact() {
@@ -53,7 +57,16 @@ export class ContactEditComponent implements OnInit, OnDestroy {
   }
 
   onBack = () => {
+    console.log('back')
     this.router.navigateByUrl('/contacts')
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent) {
+    if (!this.isInitialized) return
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.onBack()
+    }
   }
 
   ngOnDestroy(): void {

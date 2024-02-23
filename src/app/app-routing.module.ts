@@ -13,15 +13,15 @@ const routes: Routes = [
   { path: 'statistics', component: StatisticsComponent },
   {
     path: 'contacts', component: ContactIndexComponent, children: [
-      {
-        path: ':contactId', component: ContactDetailsComponent,
-        canActivate: [authGuard], resolve: { contact: contactResolver }
-      },
+      { path: 'edit', component: ContactEditComponent },
       {
         path: 'edit/:contactId', component: ContactEditComponent,
         resolve: { contact: contactResolver }
       },
-      { path: 'edit/', component: ContactEditComponent },
+      {
+        path: ':contactId', component: ContactDetailsComponent,
+        canActivate: [authGuard], resolve: { contact: contactResolver }
+      },
 
     ]
   },

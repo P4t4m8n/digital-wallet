@@ -1,3 +1,4 @@
 <ul class="contact-list">
+ <li class="add"><a routerLink="/contacts/edit"><add-icon></add-icon></a></li>
   <contact-preview *ngFor="let contact of contacts" [contact]="contact" (remove)="remove.emit($event)"></contact-preview>
 </ul>
