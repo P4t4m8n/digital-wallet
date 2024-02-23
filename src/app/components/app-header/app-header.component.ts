@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { userService } from '../../services/user.service';
-import { Observable, Subscription } from 'rxjs';
-import { User } from '../../models/user.model';
-import { Rate } from '../../models/bitcoin.model';
-import { BitcoinService } from '../../services/bitcoinService';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
+import { UserService } from '../../services/user.service'
+import { Observable, Subscription } from 'rxjs'
+import { User } from '../../models/user.model'
+import { Rate } from '../../models/bitcoin.model'
+import { BitcoinService } from '../../services/bitcoinService'
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ import { BitcoinService } from '../../services/bitcoinService';
   styleUrl: './app-header.component.scss'
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
-  userService = inject(userService)
+  userService = inject(UserService)
   subscription!: Subscription
 
   user$: Observable<User> = this.userService.user$
