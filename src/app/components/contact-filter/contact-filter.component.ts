@@ -14,20 +14,37 @@ export class ContactFilterComponent implements OnInit, OnDestroy {
   filterSubject$ = new Subject()
 
   contactServie = inject(ContactService)
+
   filterBy!: ContactFilter
+  selectedFilter: string = 'name'
 
   ngOnInit(): void {
     this.contactServie.contactFilter$
       .pipe(takeUntil(this.destroySubject$))
-      .subscribe(filterBy => this.filterBy =filterBy)
+      .subscribe(filterBy => this.filterBy = filterBy)
 
     this.filterSubject$
-      .pipe(debounceTime(300), distinctUntilChanged())
+      .pipe(debounceTime(1), distinctUntilChanged())
       .subscribe(() => this.contactServie.setFilter(this.filterBy))
   }
 
-  onSetFilter(value: string) {
-    this.filterSubject$.next(value)
+  onSetFilter(filterType: string, value: string) {
+    switch (filterType) {
+      case 'name':
+        this.filterBy.name = value;
+        break;
+      case 'phone':
+        this.filterBy.phone = value;
+        break;
+      case 'email':
+        this.filterBy.email = value;
+        break;
+    }
+    this.filterSubject$.next({ ...this.filterBy });
+  }
+
+  onFilterChange(filterType: string) {
+    this.selectedFilter = filterType
   }
 
   ngOnDestroy(): void {

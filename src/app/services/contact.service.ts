@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, throwError, from, tap, retry, catchError } from 'rxjs';
-import { storageService } from './async-storage.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Contact, ContactFilter } from '../models/contact.model';
+import { Injectable } from '@angular/core'
+import { Observable, BehaviorSubject, throwError, from, tap, retry, catchError } from 'rxjs'
+import { storageService } from './async-storage.service'
+import { HttpErrorResponse } from '@angular/common/http'
+import { Contact, ContactFilter } from '../models/contact.model'
 
 const ENTITY = 'contacts'
 @Injectable({
@@ -15,7 +15,7 @@ export class ContactService {
     private _contacts$ = new BehaviorSubject<Contact[]>([])
     public contacts$ = this._contacts$.asObservable()
 
-    private _contactFilter$ = new BehaviorSubject<ContactFilter>({ term: "" })
+    private _contactFilter$ = new BehaviorSubject<ContactFilter>({ name: "", phone: "", email: "" })
     public contactFilter$ = this._contactFilter$.asObservable()
 
     //Constructor
@@ -34,8 +34,14 @@ export class ContactService {
             .pipe(
                 tap(contacts => {
                     const filterBy = this._contactFilter$.value
-                    console.log("filterBy:", filterBy)
-                    contacts = contacts.filter(contact => contact.name.toLowerCase().includes(filterBy.term.toLowerCase()))
+                    console.log("filterBy:", this._contactFilter$)
+                    if (filterBy.name)
+                        contacts = contacts.filter(contact => contact.name.toLowerCase().includes(filterBy.name.toLowerCase()))
+                    if (filterBy.phone)
+                        contacts = contacts.filter(contact => contact.phone.toLowerCase().includes(filterBy.phone.toLowerCase()))
+                    if (filterBy.email)
+                        contacts = contacts.filter(contact => contact.email.toLowerCase().includes(filterBy.email.toLowerCase()))
+
                     this._contacts$.next(this._sort(contacts))
                 }),
                 retry(1),
@@ -74,6 +80,7 @@ export class ContactService {
     }
 
     public setFilter(filterBy: ContactFilter) {
+        console.log("filterBy:", filterBy)
         this._contactFilter$.next(filterBy)
         this.query().subscribe()
     }
@@ -107,21 +114,12 @@ export class ContactService {
     private _sort(contacts: Contact[]): Contact[] {
         return contacts.sort((a, b) => {
             if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
-                return -1;
+                return -1
             }
             if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
-                return 1;
+                return 1
             }
-            return 0;
-        })
-    }
-
-    private _filter(contacts: Contact[], term: string) {
-        term = term.toLocaleLowerCase()
-        return contacts.filter(contact => {
-            return contact.name.toLocaleLowerCase().includes(term) ||
-                contact.phone.toLocaleLowerCase().includes(term) ||
-                contact.email.toLocaleLowerCase().includes(term)
+            return 0
         })
     }
 
@@ -242,7 +240,7 @@ export class ContactService {
                 "email": "lillyconner@renovize.com",
                 "phone": "+1 (842) 587-3812"
             }
-        ];
+        ]
         return contacts
     }
 

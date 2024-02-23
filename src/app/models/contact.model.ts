@@ -8,5 +8,7 @@ export interface Contact {
 }
 
 export interface ContactFilter {
-    term: string
+    name: string
+    phone: string
+    email: string
 }
