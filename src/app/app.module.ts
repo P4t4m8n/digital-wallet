@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
@@ -24,6 +24,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
 import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,13 @@ import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.compone
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false } }, provideAnimationsAsync()],
   bootstrap: [AppComponent]

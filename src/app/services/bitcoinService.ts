@@ -15,17 +15,12 @@ export class BitcoinService {
   public rate$ = this._rate$.asObservable()
 
   getRate(): Observable<number> {
-    const rate = loadFromStorage('rate_db')
-    if (rate !== undefined) {
-      this._rate$.next(rate)
-      return of(rate)
-    }
+   
     const URL = 'https://blockchain.info/tobtc?currency=USD&value=1'
     return this.http.get<any>(URL, { responseType: 'text' as 'json' }).pipe(
       tap((fetchedRate: any) => {
         const rateValue = { rate: fetchedRate }
         this._rate$.next(rateValue)
-        saveToStorage('rate_db', rateValue)
       }),
       catchError(error => {
         throw new Error('Error in getRate: ' + error)
@@ -34,8 +29,7 @@ export class BitcoinService {
   }
 
   getData(type: string): Observable<any> {
-    let chartData = loadFromStorage(type)
-    if (chartData) return of(chartData)
+    let chartData
 
     const URL = `https://api.blockchain.info/charts/${type}?timespan=5months&format=json&cors=true`
     return this.http.get<ChartResponse>(URL).pipe(
@@ -51,7 +45,6 @@ export class BitcoinService {
           labels,
           datasets: [dataset]
         }
-        saveToStorage(type, chartData)
         return chartData
       }),
       catchError(error => {
