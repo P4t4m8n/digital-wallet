@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { AsyncPipe, NgComponentOutlet } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app-root/app.component';
@@ -24,7 +26,6 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
 import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-icon.component';
 @NgModule({
   declarations: [
@@ -55,6 +56,8 @@ import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-ico
     MatSelectModule,
     MatInputModule,
     MatDialogModule,
+    NgComponentOutlet,
+    AsyncPipe,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

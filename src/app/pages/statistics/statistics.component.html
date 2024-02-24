@@ -4,11 +4,13 @@
       <select [(ngModel)]="type" (change)="onTypeChange(type)">
         <option value="market-price">Market Price</option>
         <option value="avg-block-size">Average Block Size</option>
+        <option value="trade-volume">Exchange Trade Volume </option>
+        <option value="bitcoin-profitable-days">Bitcoin Profitable Days </option>
       </select>
     </section>
 
     <section class="chart-select">
-      <select [(value)]="currChart">
+      <select [(ngModel)]="currChart" (change)="loadComponent()">
         <option disabled>Pick a Chart</option>
         <option value="line-chart">Line Chart</option>
         <option value="bar-chart">Bar Chart</option>
@@ -16,8 +18,8 @@
     </section>
 
   </div>
-  <div class="chart-con">
-    <line-chart *ngIf="currChart === 'line-chart'" [chartData]="chartData"></line-chart>
-    <bar-chart *ngIf="currChart === 'bar-chart'" [chartData]="chartData"></bar-chart>
+
+  <div class="dynmic-comp">
+    <ng-template #chartContainer></ng-template>
   </div>
 </section>

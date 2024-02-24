@@ -25,6 +25,7 @@
     "chartjs-plugin-annotation": "^3.0.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "chnpm": "^1.1.4",
+    "firebase": "^10.6.0",
     "install": "^0.13.0",
     "ng2-charts": "^5.0.4",
     "rxjs": "~7.8.0",
