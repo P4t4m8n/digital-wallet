@@ -1,15 +1,20 @@
 <header>
-  <div>
+  <div class="logo">
     <img src="https://res.cloudinary.com/dpnevk8db/image/upload/v1708452848/bitcoin_c0aqfp.png" />
-    <nav>
-      <a routerLink="/home">Home</a>
-      <a routerLink="/statistics">Statistics</a>
-    </nav>
   </div>
-  <section *ngIf="user$|async as user" class="user">
+  <nav id="nav" [ngClass]="{slide:isSlideIn}">
+    <a routerLink="/home">Home</a>
+    <a routerLink="/statistics">Statistics</a>
     <a routerLink="/contacts">Contacts</a>
-    <h3>
-      {{ user.name }}
-    </h3>
-  </section>
+    <section *ngIf="user$|async as user" class="user">
+      <h3>
+        {{ user.name }}
+      </h3>
+      <img src="/assets/contact.png">
+    </section>
+  </nav>
+  <button class="mobile-nav-btn" (click)="setIsSlideIn()">
+    <burger-icon [isSlideIn]="!isSlideIn"></burger-icon>
+  </button>
+
 </header>

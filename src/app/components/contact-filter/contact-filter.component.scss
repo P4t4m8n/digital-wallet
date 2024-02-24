@@ -22,3 +22,9 @@
 
     }
 }
+
+@media (max-width:580px) {
+    :host {
+        justify-content: center
+    }
+}

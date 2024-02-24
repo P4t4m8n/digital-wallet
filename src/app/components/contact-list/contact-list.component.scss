@@ -35,6 +35,7 @@
 
         &:hover {
             background-color: rgb(29, 70, 131);
+
             a {
                 fill: white
             }
@@ -43,4 +44,10 @@
 
     }
 
+}
+
+@media (max-width:580px) {
+    .contact-list {
+        justify-content: center
+    }
 }

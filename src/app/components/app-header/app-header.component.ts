@@ -12,18 +12,25 @@ import { BitcoinService } from '../../services/bitcoinService'
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
   userService = inject(UserService)
+  bitcoinService = inject(BitcoinService)
+
   subscription!: Subscription
 
   user$: Observable<User> = this.userService.user$
-  bitcoinService = inject(BitcoinService)
-
   rate$: Observable<Rate> = this.bitcoinService.rate$
 
+  isSlideIn = false
 
   ngOnInit(): void {
     this.bitcoinService.getRate().pipe().subscribe({
       error: (error) => console.log('error:', error)
     })
+  }
+
+  setIsSlideIn = () => {
+    console.log(" this.isSlideIn:",  this.isSlideIn)
+    this.isSlideIn = !this.isSlideIn
+    console.log(" this.isSlideIn:",  this.isSlideIn)
   }
 
   ngOnDestroy(): void {

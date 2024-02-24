@@ -1,6 +1,7 @@
-:host{
+:host {
     margin-inline: 8px;
 }
+
 .add {
     list-style: none;
     padding: 8px;
@@ -32,4 +33,11 @@
     &:hover {
         background-color: rgb(29, 70, 131);
         fill: white;
-    }}
+    }
+}
+
+@media (max-width:580px) {
+    :host {
+        justify-content: center
+    }
+}

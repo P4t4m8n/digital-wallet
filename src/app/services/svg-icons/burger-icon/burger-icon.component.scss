@@ -1,0 +1,20 @@
+.icon-hamburger {
+    cursor: pointer;
+}
+
+.icon-hamburger .line {
+    fill: #000;
+    transition: transform 0.4s ease, opacity 0.2s ease;
+}
+
+.icon-hamburger.toggled .top {
+    transform: translateY(-18px) translateX(40px) rotate(45deg);
+}
+
+.icon-hamburger.toggled .middle {
+    opacity: 0;
+}
+
+.icon-hamburger.toggled .bottom {
+    transform: translateY(30px) translateX(-30px) rotate(-45deg);
+}

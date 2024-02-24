@@ -25,6 +25,7 @@ import { LineChartComponent } from './components/charts/line-chart/line-chart.co
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
 import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-icon.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     LineChartComponent,
     BarChartComponent,
     AddIconComponent,
+    BurgerIconComponent,
   ],
   imports: [
     HttpClientModule,

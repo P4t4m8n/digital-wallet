@@ -1,64 +1,143 @@
 header {
     box-sizing: border-box;
     display: flex;
+    position: relative;
     width: 100%;
-    justify-content: space-between;
     padding-inline: 1rem;
     background-color: rgb(235, 244, 251);
     border-radius: 12px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgb(29, 70, 131)0px 1px 2px 0px;
+    justify-content: space-between;
+    align-items: center;
 
-    div {
-        display: flex;
-        align-items: center;
-        gap: 2.5rem;
+
+
+    .logo {
 
         img {
             width: 100%;
             object-fit: scale-down;
             height: 3rem;
+            align-self: flex-start;
+        }
+    }
+
+
+
+    nav {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+
+        a {
+            width: 4em;
+            text-align: center;
+            height: fit-content;
+            text-decoration: none;
+            color: black;
+            font-size: 1rem;
+            line-height: 1;
+            text-decoration: none;
+            font-weight: 100;
+            padding: .5em;
+            border-radius: 30px;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(29, 70, 131) 0px 0px 0px 1px inset;
+
+            &:hover {
+                background-color: rgb(29, 70, 131);
+                color: white;
+            }
+
         }
 
-        nav {
+        section {
             display: flex;
             gap: .5rem;
-        }
 
+            img {
+                height: 2em;
+                object-fit: scale-down;
+            }
+
+            h3 {
+                line-height: 0;
+                font-weight: 400;
+                font-style: oblique;
+            }
+
+        }
+    }
+
+    .mobile-nav-btn {
+        position: fixed;
+        z-index: 9999;
+        width: 2rem;
+        right: 15%;
+        border: 0;
+        object-fit: scale-down;
+        aspect-ratio: 1;
+        background: none;
+        display: none;
 
     }
 
-    a {
-        text-decoration: none;
-        color: black;
-        font-size: 1rem;
-        line-height: 1;
-        text-decoration: none;
-        font-weight: 100;
-        padding: 8px;
-        border-radius: 30px;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(29, 70, 131) 0px 0px 0px 1px inset;
+}
 
-        &:hover {
-            background-color: rgb(29, 70, 131);
-            color: white;
+@media (max-width:580px) {
+    header {
+
+        nav {
+            position: fixed;
+            inset: 0 0 0 70%;
+            background: steelblue;
+            backdrop-filter: blur(10px);
+            flex-direction: column-reverse;
+            padding: 4rem 1em;
+            background: hsl(0 0% 0%/0.7);
+            justify-content: flex-end;
+            transform: translate(100%);
+            animation-duration: 0.7s;
+            animation-fill-mode: both;
+            animation-name: slideOut;
+            min-width: fit-content;
+
+            a {
+                color: rgb(235, 244, 251);
+
+            }
+
+            h3 {
+                display: none;
+            }
         }
 
-    }
-
-
-
-
-    section {
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-
-        h3 {
-            line-height: 0;
-            font-weight: 400;
-            font-style: oblique;
+        .slide {
+            animation-name: slideIn;
         }
 
+        .mobile-nav-btn {
+            display: block;
+        }
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(100%);
     }
 
+    to {
+        transform: translate(0%);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translate(0%);
+    }
+
+    to {
+        transform: translate(100%);
+    }
 }
