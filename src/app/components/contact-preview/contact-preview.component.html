@@ -10,8 +10,8 @@
     </h4>
     <div>
       <button (click)="onRemoveContact()">Remove</button>
-      <a [routerLink]="['edit', contact._id]">Edit</a>
+      <a [routerLink]="['edit', contact.id]">Edit</a>
 
-      <a routerLink="{{contact._id}}">Details</a>
+      <a routerLink="{{contact.id}}">Details</a>
     </div>
   </li>

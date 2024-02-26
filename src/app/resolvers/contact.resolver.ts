@@ -6,7 +6,6 @@ import { of } from 'rxjs'
 
 export const contactResolver: ResolveFn<Contact | Partial<Contact>> = (route, state) => {
   const contactId = route.params['contactId']
-  console.log("contactId:", contactId)
 
   // if (!contactId) { return of(inject(ContactService).getEmptyContact()) }
    return inject(ContactService).get(contactId) 

@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core'
-import { Observable, BehaviorSubject, throwError, from, tap, retry, catchError } from 'rxjs'
+import { Injectable, inject } from '@angular/core'
+import { Observable, BehaviorSubject, throwError, from, tap, retry, catchError, of } from 'rxjs'
 import { storageService } from './async-storage.service'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Contact, ContactFilter } from '../models/contact.model'
+import { AngularFirestore } from '@angular/fire/compat/firestore'
+import { firebaseService } from './firebase.service'
 
-const ENTITY = 'contacts'
+const DB_NAME = 'contact'
 @Injectable({
     providedIn: 'root'
 })
@@ -18,19 +20,19 @@ export class ContactService {
     private _contactFilter$ = new BehaviorSubject<ContactFilter>({ name: "", phone: "", email: "" })
     public contactFilter$ = this._contactFilter$.asObservable()
 
+    private _firestore = inject(AngularFirestore)
+
     //Constructor
 
     constructor() {
-        const contacts = JSON.parse(localStorage.getItem(ENTITY) || 'null')
-        if (!contacts || contacts.length === 0) {
-            localStorage.setItem(ENTITY, JSON.stringify(this._createContacts()))
-        }
+        this.initializeContacts()
+        this.query()
     }
 
     //Public Methods
 
     public query() {
-        return from(storageService.query<Contact>(ENTITY))
+        return from(firebaseService.query(DB_NAME))
             .pipe(
                 tap(contacts => {
                     const filterBy = this._contactFilter$.value
@@ -49,16 +51,16 @@ export class ContactService {
     }
 
     public get(contactId: string): Observable<Contact> {
-        return from(storageService.get<Contact>(ENTITY, contactId))
+        return from(firebaseService.get<Contact>(DB_NAME, contactId))
             .pipe(catchError(err => throwError(() => `Contact id ${contactId} not found!`)))
     }
 
     public remove(id: string) {
-        return from(storageService.remove(ENTITY, id))
+        return from(firebaseService.remove(DB_NAME, id))
             .pipe(
                 tap(() => {
                     let contacts = this._contacts$.value
-                    contacts = contacts.filter(contact => contact._id !== id)
+                    contacts = contacts.filter(contact => contact.id !== id)
                     this._contacts$.next(contacts)
                 }),
                 retry(1),
@@ -66,9 +68,9 @@ export class ContactService {
             )
     }
 
-    public save(contact: Contact) {
+    public save(contact: Contact | Partial<Contact>) {
         console.log("contact:", contact)
-        return contact._id ? this._updateContact(contact) : this._addContact(contact)
+        return (contact.id) ? this._updateContact(contact as Contact) : this._addContact(contact)
     }
 
     public getEmptyContact(): Partial<Contact> {
@@ -80,31 +82,46 @@ export class ContactService {
     }
 
     public setFilter(filterBy: ContactFilter) {
-        console.log("filterBy:", filterBy)
         this._contactFilter$.next(filterBy)
         this.query().subscribe()
     }
 
     //Private Methods
 
+    private initializeContacts() {
+        this._firestore.collection<Contact>(DB_NAME).valueChanges().pipe(
+            tap(contacts => {
+                if (contacts.length === 0) {
+                    console.log('No contacts found, initializing...');
+                    this._createContacts()
+                }
+            }),
+            catchError(error => {
+                console.error('Error initializing contacts:', error);
+                return of([])
+            })
+        ).subscribe()
+    }
+
     private _updateContact(contact: Contact) {
-        return from(storageService.put<Contact>(ENTITY, contact))
+        console.log("contact:", contact)
+        return from(firebaseService.put<Contact>(DB_NAME, contact))
             .pipe(
                 tap(updatedContact => {
                     const contacts = this._contacts$.value
-                    this._contacts$.next(contacts.map(contact => contact._id === updatedContact._id ? updatedContact : contact))
+                    this._contacts$.next(contacts.map(contact => contact.id === updatedContact.id ? updatedContact : contact))
                 }),
                 retry(1),
                 catchError(this._handleError)
             )
     }
 
-    private _addContact(contact: Contact) {
-        return from(storageService.post(ENTITY, contact))
+    private _addContact(contact: Partial<Contact>) {
+        return from(firebaseService.post<Partial<Contact>>(DB_NAME, contact))
             .pipe(
                 tap(newContact => {
                     const contacts = this._contacts$.value
-                    this._contacts$.next([...contacts, newContact])
+                    this._contacts$.next([...contacts, newContact as Contact])
                 }),
                 retry(1),
                 catchError(this._handleError)
@@ -124,124 +141,108 @@ export class ContactService {
     }
 
     private _createContacts() {
-        const contacts = [
+
+
+        const contacts: Array<Partial<Contact>> = [
             {
-                "_id": "5a56640269f443a5d64b32ca",
                 "name": "Ochoa Hyde",
                 "email": "ochoahyde@renovize.com",
                 "phone": "+1 (968) 593-3824"
             },
             {
-                "_id": "5a5664025f6ae9aa24a99fde",
                 "name": "Hallie Mclean",
                 "email": "halliemclean@renovize.com",
                 "phone": "+1 (948) 464-2888"
             },
             {
-                "_id": "5a56640252d6acddd183d319",
                 "name": "Parsons Norris",
                 "email": "parsonsnorris@renovize.com",
                 "phone": "+1 (958) 502-3495"
             },
             {
-                "_id": "5a566402ed1cf349f0b47b4d",
                 "name": "Rachel Lowe",
                 "email": "rachellowe@renovize.com",
                 "phone": "+1 (911) 475-2312"
             },
             {
-                "_id": "5a566402abce24c6bfe4699d",
                 "name": "Dominique Soto",
                 "email": "dominiquesoto@renovize.com",
                 "phone": "+1 (807) 551-3258"
             },
             {
-                "_id": "5a566402a6499c1d4da9220a",
                 "name": "Shana Pope",
                 "email": "shanapope@renovize.com",
                 "phone": "+1 (970) 527-3082"
             },
             {
-                "_id": "5a566402f90ae30e97f990db",
                 "name": "Faulkner Flores",
                 "email": "faulknerflores@renovize.com",
                 "phone": "+1 (952) 501-2678"
             },
             {
-                "_id": "5a5664027bae84ef280ffbdf",
                 "name": "Holder Bean",
                 "email": "holderbean@renovize.com",
                 "phone": "+1 (989) 503-2663"
             },
             {
-                "_id": "5a566402e3b846c5f6aec652",
                 "name": "Rosanne Shelton",
                 "email": "rosanneshelton@renovize.com",
                 "phone": "+1 (968) 454-3851"
             },
             {
-                "_id": "5a56640272c7dcdf59c3d411",
                 "name": "Pamela Nolan",
                 "email": "pamelanolan@renovize.com",
                 "phone": "+1 (986) 545-2166"
             },
             {
-                "_id": "5a5664029a8dd82a6178b15f",
                 "name": "Roy Cantu",
                 "email": "roycantu@renovize.com",
                 "phone": "+1 (929) 571-2295"
             },
             {
-                "_id": "5a5664028c096d08eeb13a8a",
                 "name": "Ollie Christian",
                 "email": "olliechristian@renovize.com",
                 "phone": "+1 (977) 419-3550"
             },
             {
-                "_id": "5a5664026c53582bb9ebe9d1",
                 "name": "Nguyen Walls",
                 "email": "nguyenwalls@renovize.com",
                 "phone": "+1 (963) 471-3181"
             },
             {
-                "_id": "5a56640298ab77236845b82b",
-
                 "name": "Glenna Santana",
                 "email": "glennasantana@renovize.com",
                 "phone": "+1 (860) 467-2376"
             },
             {
-                "_id": "5a56640208fba3e8ecb97305",
                 "name": "Malone Clark",
                 "email": "maloneclark@renovize.com",
                 "phone": "+1 (818) 565-2557"
             },
             {
-                "_id": "5a566402abb3146207bc4ec5",
                 "name": "Floyd Rutledge",
                 "email": "floydrutledge@renovize.com",
                 "phone": "+1 (807) 597-3629"
             },
             {
-                "_id": "5a56640298500fead8cb1ee5",
                 "name": "Grace James",
                 "email": "gracejames@renovize.com",
                 "phone": "+1 (959) 525-2529"
             },
             {
-                "_id": "5a56640243427b8f8445231e",
                 "name": "Tanner Gates",
                 "email": "tannergates@renovize.com",
                 "phone": "+1 (978) 591-2291"
             },
             {
-                "_id": "5a5664025c3abdad6f5e098c",
                 "name": "Lilly Conner",
                 "email": "lillyconner@renovize.com",
                 "phone": "+1 (842) 587-3812"
             }
         ]
-        return contacts
+
+        contacts.forEach(contact => this.save(contact))
+
     }
 
     private _handleError(err: HttpErrorResponse) {

@@ -11,6 +11,6 @@ export class ContactPreviewComponent {
   @Output() remove = new EventEmitter()
 
   onRemoveContact() {
-    this.remove.emit(this.contact._id)
+    this.remove.emit(this.contact.id)
   }
 }

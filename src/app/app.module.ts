@@ -3,13 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
+// import { MatSelectModule } from '@angular/material/select';
+// import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatDialogModule } from '@angular/material/dialog';
+// import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AsyncPipe, NgComponentOutlet } from '@angular/common';
+import { AngularFireModule} from '@angular/fire/compat'
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; 
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app-root/app.component';
@@ -27,6 +31,7 @@ import { LineChartComponent } from './components/charts/line-chart/line-chart.co
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
 import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.component';
 import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-icon.component';
+import { environment } from './services/firebase.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,16 +51,18 @@ import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-ico
     BurgerIconComponent,
   ],
   imports: [
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     NgChartsModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDialogModule,
+    // MatFormFieldModule,
+    // MatSelectModule,
+    // MatInputModule,
+    // MatDialogModule,
     NgComponentOutlet,
     AsyncPipe,
     ServiceWorkerModule.register('ngsw-worker.js', {

@@ -1,0 +1,54 @@
+[debug] [2024-02-26T14:13:11.323Z] ----------------------------------------------------------------------
+[debug] [2024-02-26T14:13:11.326Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\micha\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2024-02-26T14:13:11.326Z] CLI Version:   13.3.1
+[debug] [2024-02-26T14:13:11.327Z] Platform:      win32
+[debug] [2024-02-26T14:13:11.327Z] Node Version:  v20.10.0
+[debug] [2024-02-26T14:13:11.327Z] Time:          Mon Feb 26 2024 16:13:11 GMT+0200 (Israel Standard Time)
+[debug] [2024-02-26T14:13:11.327Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-02-26T14:13:11.329Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-02-26T14:13:11.372Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-02-26T14:13:11.372Z] > authorizing via signed-in user (eranopenuni@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\micha\Desktop\digital-wallet
+
+[debug] [2024-02-26T14:13:11.735Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-02-26T14:13:11.736Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-02-26T14:13:45.514Z] > refreshing access token with scopes: []
+[debug] [2024-02-26T14:13:45.515Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-02-26T14:13:45.515Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-26T14:13:45.680Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-02-26T14:13:45.680Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-26T14:13:45.689Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2024-02-26T14:13:46.136Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2024-02-26T14:13:46.137Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project bitcoin-statistics (Bitcoin-Statistics) 
+[info] 
+=== Hosting Setup
+[debug] [2024-02-26T14:13:49.603Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/bitcoin-statistics [none]
+[debug] [2024-02-26T14:13:49.839Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/bitcoin-statistics 200
+[debug] [2024-02-26T14:13:49.839Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/bitcoin-statistics {"projectId":"bitcoin-statistics","projectNumber":"39550622311","displayName":"Bitcoin-Statistics","name":"projects/bitcoin-statistics","resources":{"hostingSite":"bitcoin-statistics"},"state":"ACTIVE","etag":"1_64a688db-c93b-4f34-9601-9bc0997c7bd8"}
+[debug] [2024-02-26T14:14:40.163Z] Error: Command failed: npx --yes -p @angular/cli@"14 - 17" ng new bitcoin-statistics --directory hosting --skip-git
+    at checkExecSyncError (node:child_process:890:11)
+    at execSync (node:child_process:962:15)
+    at Object.init (C:\Users\micha\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\angular\index.js:29:34)
+    at doSetup (C:\Users\micha\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\index.js:120:76)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async init (C:\Users\micha\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\index.js:37:9)
+[error] 
+[error] Error: An unexpected error has occurred.

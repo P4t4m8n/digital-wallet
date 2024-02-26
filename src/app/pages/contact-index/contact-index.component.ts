@@ -15,7 +15,7 @@ export class ContactIndexComponent implements OnInit {
   subscription!: Subscription
   contacts$: Observable<Contact[]> = this.contactService.contacts$
   overlayVisible!: boolean
-
+  
   ngOnInit(): void {
   }
 

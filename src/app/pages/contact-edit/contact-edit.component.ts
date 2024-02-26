@@ -5,8 +5,6 @@ import { ContactService } from '../../services/contact.service'
 import { Contact } from '../../models/contact.model'
 import { FormBuilder, FormGroup } from '@angular/forms'
 
-
-
 @Component({
   selector: 'contact-edit',
   templateUrl: './contact-edit.component.html',
@@ -39,7 +37,7 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       name: [this.contact.name],
       email: [this.contact.email],
-      phone: [this.contact.phone]
+      phone: [this.contact.phone],
     })
 
     setTimeout(() => {
@@ -49,7 +47,8 @@ export class ContactEditComponent implements OnInit, OnDestroy {
   }
 
   onSaveContact() {
-    this.contactService.save({ ...this.form.value as Contact, _id: this.contact._id || '' })
+    if (this.contact.id) this.form.value.id = this.contact.id
+    this.contactService.save({ ...this.form.value as Contact })
       .pipe(takeUntil(this.destroySubject$))
       .subscribe({
         next: this.onBack, error: (err => console.log('err', err))
@@ -57,7 +56,6 @@ export class ContactEditComponent implements OnInit, OnDestroy {
   }
 
   onBack = () => {
-    console.log('back')
     this.router.navigateByUrl('/contacts')
   }
 
