@@ -30,6 +30,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
 import { AddIconComponent } from './services/svg-icons/add-icon/add-icon.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-icon.component';
 import { environment } from './services/firebase.service';
 @NgModule({
