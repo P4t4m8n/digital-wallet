@@ -68,4 +68,6 @@ import { BurgerIconComponent } from './services/svg-icons/burger-icon/burger-ico
   providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false } }, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
