@@ -1,4 +1,7 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc } from "@firebase/firestore"
+import firebase from 'firebase/compat/app';
+import * as firebaseui from 'firebaseui'
+import 'firebaseui/dist/firebaseui.css'
 
 export const firebaseService = {
     query,
@@ -12,18 +15,20 @@ interface Entity {
     id: string
 }
 
-export const environment = {
-    production: false,
-    firebaseConfig: {
-        apiKey: "AIzaSyCnMKKz88CGPzzBwH23hEGS4rtJHIpYn14",
-        authDomain: "bitcoin-statistics.firebaseapp.com",
-        projectId: "bitcoin-statistics",
-        storageBucket: "bitcoin-statistics.appspot.com",
-        messagingSenderId: "39550622311",
-        appId: "1:39550622311:web:2122e16dd522308a32d2c2"
-    }
-}
-
+export const firebaseUiAuthConfig: firebaseui.auth.Config = {
+    signInFlow: 'popup',
+    signInOptions: [
+    //   firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      
+      {
+        requireDisplayName: false,
+        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID
+      },
+    ],
+    // tosUrl: '<your-tos-link>',
+    // privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
+    credentialHelper: firebaseui.auth.CredentialHelper.NONE
+  }
 async function query<T>(collectionName: string, filterBy?: any) {
     const db = await _getDb()
     const collectionRef: any = collection(db, collectionName)
